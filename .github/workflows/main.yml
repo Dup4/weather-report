@@ -23,7 +23,10 @@ jobs:
           pip3 install -U -r requirements.txt
 
       - name: 'Get Weather'
-        run: python3 main.py > index.html
+        run: |
+          python3 main.py > index.html
+          mkdir site
+          cp index.html site/index.html
 
       - name: 'Get Date'
         run: echo "REPORT_DATE=$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')" >> $GITHUB_ENV
@@ -40,3 +43,11 @@ jobs:
           to: lyuzhi.pan@gmail.com
           from: Weather Bot
           content_type: text/html
+
+      - name: Release
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: site # The folder the action should deploy.
+          CLEAN: false # Automatically remove deleted files from the deploy branch
