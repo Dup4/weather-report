@@ -11,10 +11,23 @@ jobs:
     steps:
       - name: 'Checkout codes'
         uses: actions/checkout@v1
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+          architecture: 'x64' # (x64 or x86)
+      
+      - name: 'Install requirements'
+        run: |
+          pip3 install -U -r requirements.txt
+
       - name: 'Get Weather'
-        run: bash ./weather.sh
+        run: python3 main.py > index.html
+
       - name: 'Get Date'
         run: echo "REPORT_DATE=$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')" >> $GITHUB_ENV
+
       - name: 'Send mail'
         uses: dawidd6/action-send-mail@master
         with:
@@ -23,7 +36,7 @@ jobs:
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: Weather Report (${{env.REPORT_DATE}})
-          body: file://result.html
+          body: file://index.html
           to: lyuzhi.pan@gmail.com
           from: Weather Bot
           content_type: text/html
