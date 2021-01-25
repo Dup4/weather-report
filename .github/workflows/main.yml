@@ -31,7 +31,7 @@ jobs:
       
       - name: 'Get Weather'
         env: 
-          REPORT_DATE: ${{ steps.ge-date.outputs.report-date }}
+          REPORT_DATE: ${{ steps.get-date.outputs.report-date }}
         run: |
           echo ${{env.REPORT_DATE}}
           python3 main.py -t=${{env.REPORT_DATE}}
