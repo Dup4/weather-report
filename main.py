@@ -55,8 +55,8 @@ with open('./city.list', 'r', encoding='utf-8') as f:
 result = ''
 with open('./template.html', 'r', encoding='utf-8') as f:
 	result = f.read()
-				.replace('#REPLACE', weather_info)
-				.replace('#TITLE', title)
+	result = result.replace('#REPLACE', weather_info)
+	result = result.replace('#TITLE', title)	
 
 with open('./index.html', 'w', encoding='utf-8') as f:
 	f.write(result)
