@@ -9,7 +9,10 @@ def fetch(city):
 		'Accept-Language': LANGUAGE,
 		'User-Agent': UA,
 	}
-	r = requests.get(os.path.join('https://wttr.in', city), headers=headers)
+	params = {
+		'm': '',
+	}
+	r = requests.get(os.path.join('https://wttr.in', city), headers=headers, params=params)
 	return r.text
 
 def get_weather_info(html):
