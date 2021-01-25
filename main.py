@@ -27,7 +27,9 @@ parser.add_argument('-t', '--time', type=str, help='time of fetch data')
 args = parser.parse_args()
 
 title = 'Weather Report'
-if args.time: title = title + ' （{}）'.format(args.time)
+if args.time: 
+	print(args.time)
+	title = title + ' （{}）'.format(args.time)
 
 with open('./city.list', 'r', encoding='utf-8') as f:
 	citys = f.read().split('\n')
