@@ -24,7 +24,7 @@ jobs:
 
       - name: 'Get Weather'
         run: |
-          python3 main.py > index.html
+          python3 main.py
           mkdir site
           cp index.html site/index.html
 

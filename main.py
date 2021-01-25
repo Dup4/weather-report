@@ -1,6 +1,7 @@
 import bs4
 import requests
 import os
+import time
 
 def fetch(city):
 	LANGUAGE = "zh-CN"
@@ -23,8 +24,30 @@ def get_weather_info(html):
 with open('./city.list', 'r', encoding='utf-8') as f:
 	citys = f.read().split('\n')
 	weather_info = ''
+	invalid_list = [
+		'Sorry'
+	]
 	for city in citys:
+		html = ''
+		print('Fetch The Weather Of {} Begin!'.format(city))
+		for __i in range(10):
+			print('Number Of Attempts: {}'.format(__i + 1))
+			html = get_weather_info(fetch(city))
+			ok = 1
+			for invalid_word in invalid_list:
+				if html.find(invalid_word) != -1:
+					ok = 0
+					break
+			if ok == 1:
+				break
+			time.sleep(10)	
 		weather_info += get_weather_info(fetch(city))
+		print('Fetch The Weather of {} Done!'.format(city))
 
+result = ''
 with open('./template.html', 'r', encoding='utf-8') as f:
-    print(f.read().replace('REPLACE', weather_info))
+	result = (f.read().replace('REPLACE', weather_info))
+
+with open('./index.html', 'w', encoding='utf-8') as f:
+	f.write(result)
+
