@@ -2,6 +2,7 @@ import bs4
 import requests
 import os
 import time
+import argparse
 
 def fetch(city):
 	LANGUAGE = "zh-CN"
@@ -20,6 +21,13 @@ def get_weather_info(html):
 	soup = bs4.BeautifulSoup(html,'html5lib')
 	info = soup.findAll(name="pre")
 	return str(info[0])
+
+parser = argparse.ArgumentParser(description='Fetch Weather.')
+parser.add_argument('-t', '--time', type=str, help='time of fetch data')
+args = parser.parse_args()
+
+title = 'Weather Report'
+if args.time: title = title + ' （{}）'.format(args.time)
 
 with open('./city.list', 'r', encoding='utf-8') as f:
 	citys = f.read().split('\n')
@@ -46,7 +54,9 @@ with open('./city.list', 'r', encoding='utf-8') as f:
 
 result = ''
 with open('./template.html', 'r', encoding='utf-8') as f:
-	result = (f.read().replace('REPLACE', weather_info))
+	result = f.read()
+				.replace('#REPLACE', weather_info)
+				.replace('#TITLE', title)
 
 with open('./index.html', 'w', encoding='utf-8') as f:
 	f.write(result)

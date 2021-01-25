@@ -22,14 +22,14 @@ jobs:
         run: |
           pip3 install -U -r requirements.txt
 
-      - name: 'Get Weather'
-        run: |
-          python3 main.py
-          mkdir site
-          cp index.html site/index.html
-
       - name: 'Get Date'
         run: echo "REPORT_DATE=$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')" >> $GITHUB_ENV
+
+      - name: 'Get Weather'
+        run: |
+          python3 main.py -t=${{ env.REPORT_DATE }}
+          mkdir site
+          cp index.html site/index.html
 
 #      - name: 'Send mail'
 #        uses: dawidd6/action-send-mail@master
