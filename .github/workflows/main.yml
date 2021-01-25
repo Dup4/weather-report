@@ -23,18 +23,13 @@ jobs:
           pip3 install -U -r requirements.txt
 
       - name: 'Get Date'
-        id: get-date
         run: |
-          REPORT_DATE=$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')
-          echo "::set-output name=report-date::$(echo $REPORT_DATE)"
           echo "REPORT_DATE=$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')" >> $GITHUB_ENV
       
       - name: 'Get Weather'
-        env: 
-          REPORT_DATE: ${{ steps.get-date.outputs.report-date }}
         run: |
           echo ${{env.REPORT_DATE}}
-          python3 main.py -t=${{env.REPORT_DATE}}
+          python3 main.py -t="${{env.REPORT_DATE}}"
           mkdir site
           cp index.html site/index.html
 

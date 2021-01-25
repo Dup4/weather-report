@@ -29,7 +29,7 @@ args = parser.parse_args()
 title = 'Weather Report'
 if args.time: 
 	print(args.time)
-	title = title + ' （{}）'.format(args.time)
+	title = title + ' ({})'.format(args.time)
 
 with open('./city.list', 'r', encoding='utf-8') as f:
 	citys = f.read().split('\n')
