@@ -27,7 +27,7 @@ jobs:
 
       - name: 'Get Weather'
         run: |
-          python3 main.py -t=${{ env.REPORT_DATE }}
+          python3 main.py -t=${{env.REPORT_DATE}}
           mkdir site
           cp index.html site/index.html
 
