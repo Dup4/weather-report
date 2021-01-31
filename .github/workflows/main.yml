@@ -32,6 +32,11 @@ jobs:
           python3 main.py -t="${{env.REPORT_DATE}}"
           mkdir site
           cp index.html site/index.html
+          
+      - name: Minify HTML
+        uses: Dup4/minify-html-action@v7
+        with:
+          src: './site/index.html'
 
 #      - name: 'Send mail'
 #        uses: dawidd6/action-send-mail@master
