@@ -34,7 +34,7 @@ jobs:
           cp index.html site/index.html
           
       - name: Minify HTML
-        uses: Dup4/minify-html-action
+        uses: Dup4/minify-html-action@v9
         with:
           src: './site/index.html'
 
