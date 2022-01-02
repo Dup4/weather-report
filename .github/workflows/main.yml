@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout codes'
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
-      - name: Set up Python 3.8
+      - name: Set up Python 3.9
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
-          architecture: 'x64' # (x64 or x86)
+          python-version: 3.9
+          architecture: 'x64'
       
-      - name: 'Install Requirements'
+      - name: Install Requirements
         run: |
           pip3 install -U -r requirements.txt
 
@@ -52,9 +52,9 @@ jobs:
 #          content_type: text/html
 
       - name: Release
-        uses: JamesIves/github-pages-deploy-action@3.6.2
+        uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: site # The folder the action should deploy.
-          CLEAN: true # Automatically remove deleted files from the deploy branch
+          branch: gh-pages 
+          folder: site 
+          clean: true
+          clean-exclude: CNAME
